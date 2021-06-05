@@ -10,6 +10,7 @@ use app\models\Jobs;
 class JobsController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
+
     public function beforeAction($action)
     {
 
@@ -76,4 +77,58 @@ class JobsController extends \yii\web\Controller
 
     }
 
+
+    public function actionList()
+    {
+        $request = \Yii::$app->request;
+        if (!$request->isGet) {
+            \Yii::$app->response->statusCode = 400;
+            return [
+                'status' => false, 
+                'error' => 'Method not allowed in this route'
+            ];
+        }
+        $request = \Yii::$app->request;
+        $fields = [
+            'type',
+            'url',
+            'company',
+            'company_url',
+            'location',
+            'title',
+            'description',
+            'how_to_apply',
+            'company_logo'
+        ];
+
+        $query = Jobs::find();
+        foreach ($fields as $fieldName) {
+            if ($request->get($fieldName)) {
+                $query->orFilterWhere([
+                    'like', 
+                    $fieldName,
+                    $request->get($fieldName)
+                ]);
+            }
+        }
+        $countQuery = clone $query;
+        $pages = new \yii\data\Pagination([
+                'totalCount' => $countQuery->count(),
+                'pageSize' => 5,
+                'defaultPageSize' => 5
+            ]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return [
+            'offset' => $pages->offset,
+            'limit' => $pages->limit,
+            'getLinks' => $pages->getLinks(),
+            'getPage()' => $pages->getPage(),
+            'getPageCount' => $pages->getPageCount(),
+            'pages' => $pages,
+            'data' => $models,
+        ];
+    }
 }
