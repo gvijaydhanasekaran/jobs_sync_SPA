@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JobService } from '../services/job.service';
 
 @Component({
   selector: 'app-jobs',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobsComponent implements OnInit {
   panelOpenState = false;
-  constructor() { }
+  constructor(private jobservice: JobService) { }
+
 
   ngOnInit(): void {
+  }
+
+  synJobs() {
+    // alert("synJobs clicked");
+    this.jobservice.synJobs()
+      .subscribe(
+        Response => {
+          console.log(Response);
+        },
+        error => {
+          console.log(error);
+        });
   }
 
 }

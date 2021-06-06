@@ -2,6 +2,13 @@
   margin-left: 8px;
 }
 
+
+.sync_job_btn {
+  width: 120px!important;
+  height: 50px !important;
+  min-width: unset!important;
+}
+
 .overall_job_box {
   border: 2px solid #607d8b;
   margin-top: 1%;
