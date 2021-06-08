@@ -4,6 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+
+
 
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from './header/header.component';
@@ -16,9 +19,16 @@ import { MatListModule } from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { JobsComponent } from './jobs/jobs.component';
+import { JobServiceInterceptor } from './job-service.interceptor';
 
 
 @NgModule({
@@ -31,6 +41,7 @@ import { JobsComponent } from './jobs/jobs.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatSliderModule,
     LayoutModule,
     MatToolbarModule,
@@ -40,9 +51,16 @@ import { JobsComponent } from './jobs/jobs.component';
     MatListModule,
     MatExpansionModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule, 
+    HttpClientModule,
+    
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JobServiceInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

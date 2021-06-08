@@ -125,21 +125,28 @@ class JobsController extends \yii\web\Controller
                 ]);
             }
         }
+        $pageSize = ($request->get('pageSize') ? : 5);
         $countQuery = clone $query;
         $pages = new \yii\data\Pagination([
                 'totalCount' => $countQuery->count(),
-                'pageSize' => 5,
-                'defaultPageSize' => 5
+                'pageSize' => $pageSize,
+                'defaultPageSize' => $pageSize
             ]);
         $models = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
 
         return [
+            'paginationData' => [
+                'currentPage' => $pages->getPage()+1,
+                'totalNoOfPages' => $pages->getPageCount(),
+                'pageSize' => $pages->getPageSize(),
+            ],
             'offset' => $pages->offset,
             'limit' => $pages->limit,
             'getLinks' => $pages->getLinks(),
             'getPage()' => $pages->getPage(),
+            'getPageSize' => $pages->getPageSize(),
             'getPageCount' => $pages->getPageCount(),
             'pages' => $pages,
             'data' => $models,
