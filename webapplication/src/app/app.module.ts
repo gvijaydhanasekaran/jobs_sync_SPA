@@ -22,6 +22,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -55,6 +56,7 @@ import { JobServiceInterceptor } from './job-service.interceptor';
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule, 
+    MatProgressSpinnerModule,
     HttpClientModule,
     
   ],

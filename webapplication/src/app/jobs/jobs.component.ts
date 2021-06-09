@@ -30,6 +30,7 @@ export class JobsComponent implements OnInit {
   constructor(private jobservice: JobService) { }
 
   ngOnInit(): void {
+    this.jobs = [];
     this.fetchALLjobs();
     // alert(this.searchParms.company);
     // this.searchParms.company = "vijay";

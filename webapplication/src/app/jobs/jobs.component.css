@@ -3,10 +3,23 @@
 }
 
 
+.view_link {
+  color: aliceblue;
+  text-decoration: none !important;
+}
+
+.view_link:hover {
+  color: aliceblue; 
+  text-decoration:none; 
+  cursor:pointer;  
+}
+
 .sync_job_btn {
   width: 120px!important;
   height: 50px !important;
   min-width: unset!important;
+  margin-top: 2%;
+  margin-bottom: 3%;
 }
 
 .overall_job_box {

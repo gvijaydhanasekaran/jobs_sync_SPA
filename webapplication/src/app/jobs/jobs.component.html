@@ -1,13 +1,5 @@
 <div style="margin-left: 2%; margin-right: 2%; margin-top: 2%">
-  <button
-    mat-raised-button
-    color="accent"
-    class="sync_job_btn"
-    (click)="synJobs()"
-  >
-    Sync Jobs
-  </button>
-
+  
   <div id="SearchForm">
     <table class="SearchForm_table" cellspacing="0">
       <tr>
@@ -92,6 +84,7 @@
           <span class="search_spliter"> </span>
           </td>
           <td colspan="2">
+          
           <button
             mat-raised-button
             color="accent"
@@ -102,6 +95,15 @@
             <mat-icon> layers_clear</mat-icon> Clear
           </button>
           <span class="search_spliter"> </span>
+          <button
+            mat-raised-button
+            color="accent"
+            class="sync_job_btn"
+            (click)="synJobs()"
+            style="float:right;"
+          >
+            Sync Jobs
+          </button>
           </td>
       </tr>
     </table>
@@ -130,7 +132,9 @@
             <mat-icon>access_time</mat-icon> Date : {{ job.created_at }}
           </div>
           <div class="job_view_link">
-            <button mat-raised-button color="primary">View Detail</button>
+            <button mat-raised-button color="primary">
+              <a href="{{job.url}}" class="view_link" target="_blank"> View Detail</a>
+            </button>
           </div>
         </div>
         <div class="title-right">

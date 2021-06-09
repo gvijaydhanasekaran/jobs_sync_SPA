@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { JobService } from '../services/job.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,18 @@ export class HeaderComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private jobservice: JobService) {}
+
+  synJobs() {
+    // alert("synJobs clicked");
+    this.jobservice.synJobs()
+      .subscribe(
+        Response => {
+          console.log(Response);
+        },
+        error => {
+          console.log(error);
+    });
+  }
 
 }
