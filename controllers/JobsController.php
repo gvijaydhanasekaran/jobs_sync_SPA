@@ -31,6 +31,19 @@ class JobsController extends \yii\web\Controller
         \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;
         return parent::beforeAction($action);
     }
+    public function actionView($id)
+    {
+        $request = \Yii::$app->request;
+        if (!$request->isGet) {
+            \Yii::$app->response->statusCode = 400;
+            return [
+                'status' => false, 
+                'error' => 'Method not allowed in this route'
+            ];
+        }
+        $Jobs = Jobs::find()->where(['id' => $id])->one();
+        return $this->asJson($Jobs);
+    }
     public function actionSync()
     {
         $request = \Yii::$app->request;
@@ -70,6 +83,7 @@ class JobsController extends \yii\web\Controller
                 $Jobs->location = $job['location'];
                 $Jobs->title = $job['title'];
                 $Jobs->description = $job['description'];
+                $Jobs->plain_description = strip_tags($job['description']);
                 $Jobs->how_to_apply = $job['how_to_apply'];
                 $Jobs->company_logo = $job['company_logo'];
                 if ($Jobs->validate() && $Jobs->save()) {
@@ -142,13 +156,13 @@ class JobsController extends \yii\web\Controller
                 'totalNoOfPages' => $pages->getPageCount(),
                 'pageSize' => $pages->getPageSize(),
             ],
-            'offset' => $pages->offset,
-            'limit' => $pages->limit,
-            'getLinks' => $pages->getLinks(),
-            'getPage()' => $pages->getPage(),
-            'getPageSize' => $pages->getPageSize(),
-            'getPageCount' => $pages->getPageCount(),
-            'pages' => $pages,
+            // 'offset' => $pages->offset,
+            // 'limit' => $pages->limit,
+            // 'getLinks' => $pages->getLinks(),
+            // 'getPage()' => $pages->getPage(),
+            // 'getPageSize' => $pages->getPageSize(),
+            // 'getPageCount' => $pages->getPageCount(),
+            // 'pages' => $pages,
             'data' => $models,
         ];
     }

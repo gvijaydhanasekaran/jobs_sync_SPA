@@ -1,0 +1,27 @@
+<div style="margin-left: 15%; margin-right: 15%; margin-top: 2%">
+  <div>
+    <a
+      class="badge badge-warning"
+      mat-raised-button
+      color="accent"
+      routerLink="/jobs"
+    >
+      See all positions
+    </a>
+  </div>
+  <div>
+  <mat-card>
+  <mat-card-header>
+        <mat-card-title>
+          {{ data.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ data.location }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+      <span [innerHTML]=data.description></span>
+      </mat-card-content>
+  </mat-card>
+  </div>
+</div>

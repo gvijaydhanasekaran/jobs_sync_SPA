@@ -1,0 +1,244 @@
+<div style="margin-left: 15%; margin-right: 15%; margin-top: 2%">
+  <div id="SearchForm">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>search</mat-icon> Search Form
+          </mat-panel-title>
+          <mat-panel-description> </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-grid-list cols="2" rowHeight="100px">
+          <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 90%">
+              <mat-label
+                ><mat-icon>business_center</mat-icon> Company</mat-label
+              >
+              <input matInput type="text" [(ngModel)]="searchParms.company" />
+              <button
+                *ngIf="searchParms.company"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="searchParms.company = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 90%">
+              <mat-label> <mat-icon> location_on</mat-icon>Location</mat-label>
+              <input matInput type="text" [(ngModel)]="searchParms.location" />
+              <button
+                *ngIf="searchParms.location"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="searchParms.location = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field></mat-grid-tile
+          >
+        </mat-grid-list>
+
+        <mat-grid-list cols="2" rowHeight="100px">
+          <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 90%">
+              <mat-label>Description</mat-label>
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="searchParms.description"
+              />
+              <button
+                *ngIf="searchParms.description"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="searchParms.description = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field></mat-grid-tile
+          >
+          <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 90%">
+              <mat-label><mat-icon>extension</mat-icon> Job Type</mat-label>
+              <input matInput type="text" [(ngModel)]="searchParms.type" />
+              <button
+                *ngIf="searchParms.type"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="searchParms.type = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field></mat-grid-tile
+          >
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="100px">
+          <mat-grid-tile colspan="3">
+            <button
+              mat-raised-button
+              color="accent"
+              class="sync_job_btn"
+              (click)="fetchALLjobs()"
+              style="float: right;"
+            >
+              <mat-icon>search</mat-icon> Search
+            </button>
+
+            <button
+              mat-raised-button
+              color="accent"
+              class="sync_job_btn"
+              (click)="clearSearchData()"
+              style="float: left; margin-left: 3%"
+            >
+              <mat-icon> layers_clear</mat-icon> Clear
+            </button>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="1">
+            <button
+              mat-raised-button
+              color="accent"
+              class="sync_job_btn"
+              (click)="synJobs()"
+              style="float: right"
+            >
+              Sync Jobs
+            </button></mat-grid-tile
+          >
+        </mat-grid-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+<span class='margin_5'></span>
+  <!-- Start -->
+  <div class="overall_job_box">
+    <mat-card *ngFor="let job of jobs; let i = index">
+      <mat-card-header>
+        <mat-card-title>
+          {{ job.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ job.location }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-grid-list cols="4">
+          <mat-grid-tile colspan="1">
+            <img
+              src="{{ job.company_logo }}"
+              alt="{{ job.title }}"
+              style="width: 100px"
+            />
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            {{ job.plain_description | slice: 0:750 }}
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <div style="overflow: auto">
+          <div style="float: right">
+            <button
+              mat-raised-button
+              color="accent"
+              class="sync_job_btn"
+              (click)="openGithubJob(job.url)"
+              style="alignitems: flex-end"
+            >
+              <mat-icon> forum</mat-icon> View More on GitHUB
+            </button>
+            <a class="badge badge-warning" mat-raised-button  color="accent" routerLink="/job/{{ job.id }}">
+            <mat-icon>remove_red_eye</mat-icon> View More..
+            </a>
+          </div>
+        </div>
+        <span style="clear: both"></span>
+        <!-- {{ job.url }} -->
+      </mat-card-actions>
+      <mat-card-footer>
+        <!-- <mat-icon>access_time</mat-icon> {{ job.created_at }}
+        <mat-icon>extension</mat-icon> {{ job.type }}
+        -->
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  <!-- End -->
+
+  <div class="center margin_5" *ngIf="jobs.length > 0">
+    <div class="pagination">
+      <a
+        href="javascript: void(0);"
+        (click)="openPage(prePage)"
+        *ngFor="let prePage of paginationData.prevPageNumbers; let i = index"
+      >
+        {{ prePage }}
+      </a>
+      <a href="javascript: void(0);" class="active">
+        {{ paginationData.currentPage }}
+      </a>
+      <a
+        href="javascript: void(0);"
+        (click)="openPage(nexPage)"
+        *ngFor="let nexPage of paginationData.nextPageNumbers; let i = index"
+      >
+        {{ nexPage }}
+      </a>
+
+      <!-- 
+      <a href="#">&laquo;</a>
+      <a href="#">1</a>
+      <a href="#" class="active">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+      <a href="#">6</a>
+      <a href="#">&raquo;</a>
+      -->
+    </div>
+  </div>
+
+  <!-- Start -->
+  <!-- <div class="overall_job_box">
+      <div class="job-wrapper">
+         <div class="job-box">
+            <div class="title-left">
+               <div class="job_title">
+                  Senior Creative Front End Web Developer
+               </div>
+               <div class="job_company">
+                  company : SweetRush
+               </div>
+               <div class="job_location">
+                  location : Remote
+               </div>
+               <div class="job_type">
+                  Job type : Remote
+               </div>
+               <div class="job_created_at">
+                  Date : Wed May 19 00:49:17 UTC 2021
+               </div>
+               <div class="job_view_link">
+                  <button mat-raised-button color="primary">
+                  View Detail 
+                  </button>
+               </div>
+            </div>
+            <div class="title-right">
+               <div class="job_image">
+                  <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+               </div>
+               <br>
+            </div>
+         </div>
+      </div>
+   </div> -->
+  <!-- End -->
+</div>

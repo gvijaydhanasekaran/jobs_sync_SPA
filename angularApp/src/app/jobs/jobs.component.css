@@ -1,0 +1,39 @@
+mat-card {
+    margin-bottom: 3%;
+}
+
+mat-expansion-panel-header {
+    background-color: #ff4081;
+}
+
+.margin_5 {
+    margin: 5%;
+  }
+  .center {
+    text-align: center;
+  }
+  
+  .job_location > mat-icon, .job_type > mat-icon, .job_created_at > mat-icon {
+    font-size: 14px;
+    width: 14px;
+  }
+  
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: #ff4081;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+  }
+  
+  .pagination a.active {
+    background-color: #ff4081;
+    color: #fff;
+    border: 1px solid #ff4081;
+  }

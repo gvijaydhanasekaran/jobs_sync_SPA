@@ -17,6 +17,7 @@ use Yii;
  * @property string|null $location
  * @property string $title
  * @property string|null $description
+ * @property string|null $plain_description
  * @property string|null $how_to_apply
  * @property string|null $company_logo
  */
@@ -37,7 +38,7 @@ class Jobs extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['description', 'how_to_apply'], 'string'],
+            [['description', 'plain_description', 'how_to_apply'], 'string'],
             [['job_id', 'created_at'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 10],
             [['company_logo'], 'string', 'max' => 2048],
@@ -62,6 +63,7 @@ class Jobs extends \yii\db\ActiveRecord
             'location' => 'Location',
             'title' => 'Title',
             'description' => 'Description',
+            'plain_description' => 'plain description',
             'how_to_apply' => 'How To Apply',
             'company_logo' => 'Company Logo',
         ];

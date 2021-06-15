@@ -23,6 +23,7 @@ class m210605_012230_create_jobs_table extends Migration
             'location' => $this->string(255),
             'title' => $this->string(255)->notNull(),
             'description' => $this->text(),
+            'plain_description' => $this->text(),
             'how_to_apply' => $this->text(),
             'company_logo' => $this->string(2048),
         ]);
